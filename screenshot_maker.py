@@ -68,14 +68,14 @@ class ScreenshotMaker():
         pictures_numbers = []
 
         for file in files:
-            if file.endswith('.png'):
-                filename = file.split('.')[0]
-                if filename.isnumeric():
-                    pictures_numbers.append(int(filename))
+            name, extension = (os.path.splitext(file)[i] for i in range(2))
+            if extension.lower() == '.png':
+                if name.isnumeric():
+                    pictures_numbers.append(int(name))
 
         if pictures_numbers:
-            screenshot_name = f"{max(pictures_numbers) + 1}.png"
+            screenshot_name = f"{max(pictures_numbers) + 1}.PNG"
         else:
-            screenshot_name = '1.png'
+            screenshot_name = '1.PNG'
         screenshot_path = os.path.join(path, screenshot_name)
         screenshot.save(screenshot_path)
