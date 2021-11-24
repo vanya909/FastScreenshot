@@ -25,7 +25,6 @@ class ScreenshotMaker():
                         self.isGetFirstPosition):
                 mouseX, mouseY = pag.position()
                 self.isGetFirstPosition = True
-                print('Get first position')
 
             elif (self.isGetFirstPosition and not
                     (self.lis.isCtrlPressed and self.lis.isALtPressed)):
@@ -59,8 +58,6 @@ class ScreenshotMaker():
                 # win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
                 # win32clipboard.CloseClipboard()
 
-                print('Make screenshot')
-
                 self.isGetFirstPosition = False
 
     def save_screenshot(self, screenshot, path):
@@ -68,7 +65,7 @@ class ScreenshotMaker():
         pictures_numbers = []
 
         for file in files:
-            name, extension = (os.path.splitext(file)[i] for i in range(2))
+            name, extension = os.path.splitext(file)
             if extension.lower() == '.png':
                 if name.isnumeric():
                     pictures_numbers.append(int(name))
@@ -77,5 +74,7 @@ class ScreenshotMaker():
             screenshot_name = f"{max(pictures_numbers) + 1}.PNG"
         else:
             screenshot_name = '1.PNG'
+
         screenshot_path = os.path.join(path, screenshot_name)
-        screenshot.save(screenshot_path)
+        screenshot.save(screenshot_path, dpi=(120, 120))
+        print(f'Screenshot was saved at {os.path.join(path, screenshot_name)}')
